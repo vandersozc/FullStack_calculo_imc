@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bem Vindo</title>
+</head>
+<body>
+    <h1>Eu sou uma página HTML</h1>
+    <div>
+        <label>Nome:</label>
+        <input type="text" id="nome">
+        <button type="button" id="enviar">Enviar</button>
+    </div>
+    <!--
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        window.onload = function() {
+            document.querySelector('#enviar').onclick = enviar;
+
+            function enviar() {
+                var nome = document.querySelector('#nome').value;
+
+                axios.get('/api/hello?nome=' + nome)
+                  .then(function(response){
+                      var resultado = document.createElement('h3');
+                      resultado.innerText = response.data.mensagem;
+                      document.body.appendChild(resultado);
+                  })
+            }
+        }
+    </script> -->
+</body>
+</html>

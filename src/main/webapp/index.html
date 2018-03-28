@@ -1,0 +1,98 @@
+
+<!doctype html>
+<html lang="en" ng-app="app">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Calculadora IMC</title>
+  </head>
+  <body ng-controller="ImcController as vm">
+    <div class="container">
+        <h1 class="col-md-8 display-4 mx-auto text-center">Digite seus dados para calcularmos seu IMC</h1>
+        <form class="col-md-8 mx-auto">
+            <div class="form-group">
+              <label for="lblNome">Nome</label>
+              <input id="lblNome"
+                     required
+                     ng-model="vm.nome"
+                     type="text" 
+                     class="form-control"
+                     placeholder="Informe seu nome">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="lblPeso">Peso</label>
+                  <input id="lblPeso"
+                         required
+                         ng-model="vm.peso"
+                         type="text" 
+                         class="form-control" 
+                         placeholder="Informe seu peso">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="lblAltura">Altura</label>
+                  <input id="lblAltura"
+                         required
+                         ng-model="vm.altura"
+                         type="text" 
+                         class="form-control"  
+                         placeholder="Informe sua altura">
+                </div>
+            </div>
+            </br>
+            <button id="btnEnviar"
+                    ng-click="vm.calcular()"
+                    class="btn btn-outline-success btn-lg btn-block">Calcular
+            </button>
+            </br>
+            <div class="alert alert-warning alert-dismissible fade show" 
+                 role="alert" 
+                 ng-if="vm.mostraAlerta()">
+                 Olá {{vm.resposta.nome}} seu <strong>IMC é: {{vm.resposta.imc}}</strong> 
+                <button type="button"
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>   
+        </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script>
+        angular.module('app', []);
+        angular.module('app').controller('ImcController', ImcController);
+
+        function ImcController($http) {
+            var vm = this;
+
+            vm.nome = undefined;
+            vm.peso = undefined;
+            vm.altura = undefined;
+            vm.resposta = undefined;
+            
+            vm.calcular = function() {
+                $http.get('/api/imc/?nome='+vm.nome+ '&peso='+vm.peso+ '&altura='+vm.altura)
+                .then(function(response){
+                    vm.resposta = response.data;
+                })
+                vm.resposta = undefined; 
+            }
+
+            vm.mostraAlerta = function() {
+                return vm.resposta && vm.nome && vm.peso && vm.altura;
+            }
+        }
+    </script>
+</body>
+</html>
